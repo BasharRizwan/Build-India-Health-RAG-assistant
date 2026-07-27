@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>India Health Lens</title>
+    <link rel="stylesheet" href="/app.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <strong>India Health Lens</strong>
+        <span>PIB source-bound assistant</span>
+      </div>
+      <div class="status-pill" id="mode">local-grounded</div>
+    </header>
+
+    <main class="shell">
+      <section class="workspace">
+        <div class="brand-row">
+          <div>
+            <p class="eyebrow">Question</p>
+            <h1>Ask the PIB health transformation document</h1>
+          </div>
+        </div>
+
+        <form id="ask-form" class="ask-panel">
+          <div class="input-row">
+            <textarea id="question" name="question" rows="4" placeholder="Ask about AB-PMJAY, AAMs, ABDM, NHM, NCD screening, telemedicine..."></textarea>
+            <button type="submit">
+              <span>Ask</span>
+            </button>
+          </div>
+          <div class="quick-row" aria-label="Example questions">
+            <button type="button" data-question="How does AB-PMJAY reduce healthcare costs for poor families?">AB-PMJAY</button>
+            <button type="button" data-question="What services do Ayushman Arogya Mandirs provide?">AAM services</button>
+            <button type="button" data-question="How did India expand digital and last-mile health services?">Digital health</button>
+            <button type="button" data-question="What progress does the PIB document mention on NCD screening?">NCD screening</button>
+          </div>
+        </form>
+
+        <section class="answer-band">
+          <div class="answer-header">
+            <p class="eyebrow">Answer</p>
+            <span id="latency">ready</span>
+          </div>
+          <div id="answer" class="answer">Your grounded answer will appear here.</div>
+        </section>
+      </section>
+
+      <aside class="evidence-panel">
+        <div class="source-mark">
+          <div>
+            <p class="eyebrow">Source</p>
+            <h2>India's Health Transformation</h2>
+          </div>
+        </div>
+        <div class="metric-grid">
+          <div><strong>1</strong><span>document</span></div>
+          <div><strong>k=4</strong><span>retrieval</span></div>
+          <div><strong>768</strong><span>dims</span></div>
+        </div>
+        <div class="sources-title">
+          <h3>Evidence</h3>
+          <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2269699&reg=48&lang=2" target="_blank" rel="noreferrer">PIB page</a>
+        </div>
+        <div id="sources" class="sources">
+          <article class="source-card empty">No evidence retrieved yet.</article>
+        </div>
+      </aside>
+    </main>
+    <script src="/app.js"></script>
+  </body>
+</html>

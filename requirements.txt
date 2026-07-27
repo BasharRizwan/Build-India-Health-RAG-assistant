@@ -1,0 +1,3 @@
+# The app runs on Python 3.10+ with the standard library only.
+# Optional: set OPENAI_API_KEY to enable the hosted LLM answer path.
+
