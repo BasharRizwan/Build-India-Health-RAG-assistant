@@ -253,3 +253,14 @@ ABDM aims to build a unified digital health ecosystem by providing digital healt
   ## License
 
 This project was developed as part of a technical assignment and is intended for educational and evaluation purposes.
+
+## Screeenshot
+### Home page
+<img src="screenshots/home.png" width="900">
+
+### Generated Answer
+<img width="1875" height="976" alt="{F17CE8AB-DC5B-4222-AC3A-2A358B3480C5}" src="https://github.com/user-attachments/assets/6fe58743-4813-4b78-a2de-101586faec0a" />
+
+
+### Retrieved Evidence
+<img width="808" height="939" alt="{93CBFDB8-8275-4B28-BDD2-65ABD40E42A1}" src="https://github.com/user-attachments/assets/3a89b9ff-9241-4967-b58a-38a7e68c75cb" />
