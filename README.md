@@ -16,6 +16,52 @@ https://www.pib.gov.in/PressReleasePage.aspx?PRID=2269699&reg=48&lang=2
 - Optional OpenAI answer generation when `OPENAI_API_KEY` is set.
 - Local grounded fallback, so the demo works without paid API keys.
 
+## Architecture
+
+
+                PIB Health Transformation Document
+                             │
+                             ▼
+                  Document Ingestion (ingest.py)
+                             │
+                             ▼
+                     Clean Text Extraction
+                             │
+                             ▼
+                Semantic Chunking (200–500 words)
+                             │
+                             ▼
+                 Embedding Generation
+                             │
+                             ▼
+        JSON Vector Index (chunks + embeddings)
+                             │
+                             ▼
+                      User Question
+                             │
+                             ▼
+                  Question Embedding
+                             │
+                             ▼
+             Cosine Similarity Semantic Search
+                             │
+                             ▼
+                 Top-k Relevant Chunks
+                             │
+                             ▼
+                RAG Prompt Construction
+                             │
+                    ┌────────┴────────┐
+                    │                 │
+                    ▼                 ▼
+        Local Grounded Answer   OpenAI LLM (Optional)
+                    │                 │
+                    └────────┬────────┘
+                             ▼
+                      Final Response
+
+
+
 ## Project Structure
 
 ```text
@@ -39,6 +85,32 @@ tests/
   test_rag.py
 ```
 
+## Technology Stack
+
+| Component | Technology |
+|-----------|------------|
+| Language | Python 3.10+ |
+| Backend | Python Standard Library |
+| Frontend | HTML, CSS, JavaScript |
+| Document Ingestion | urllib |
+| Chunk Storage | JSON |
+| Embedding Model | local-hashing-embedding-v1 |
+| Retrieval | Cosine Similarity |
+| Optional LLM | OpenAI API |
+| Interface | Browser UI + CLI |
+
+## Features
+
+- Semantic document ingestion
+- Automatic semantic chunking
+- Local embedding generation
+- Cosine similarity search
+- Retrieval-Augmented Generation (RAG)
+- Browser interface
+- Command-line interface
+- Offline grounded answer mode
+- Optional OpenAI-powered answer generation
+  
 ## Setup
 
 Python 3.10+ is enough. No packages are required for the default demo.
@@ -66,6 +138,20 @@ Run tests:
 python -m unittest discover -s tests
 ```
 
+## Workflow
+
+1. Download and clean the PIB document.
+2. Split the document into semantic chunks.
+3. Generate embeddings for every chunk.
+4. Store chunks and embeddings as JSON.
+5. Embed the user's question.
+6. Retrieve the most relevant chunks using cosine similarity.
+7. Construct a grounded RAG prompt.
+8. Generate the answer:
+   - Local grounded mode (default)
+   - OpenAI LLM mode (optional)
+9. Return the answer together with retrieved evidence.
+
 ## Optional LLM Mode
 
 By default, the app uses local grounded sentence extraction after retrieval. That makes it reliable in an interview demo even without API keys.
@@ -79,6 +165,21 @@ python -m src.server
 ```
 
 The app still sends only retrieved PIB chunks to the model and asks it not to use outside facts.
+
+## Answer Generation Modes
+
+### Default Mode
+
+The application works completely offline by generating grounded extractive answers from the retrieved PIB chunks. This mode requires no API key and is the default behaviour.
+
+### Optional LLM Mode
+
+When an `OPENAI_API_KEY` is configured, the retrieved chunks are inserted into a grounded RAG prompt and sent to the configured OpenAI model.
+
+The model is instructed to answer **only from the retrieved PIB context**, helping reduce hallucinations.
+
+> **Note:** The OpenAI API is optional and may require a paid API key depending on your OpenAI account and billing plan.
+
 
 ## Ingestion and Chunking
 
@@ -115,6 +216,23 @@ data/index/embeddings.json
 6. Otherwise, the app returns a grounded extractive answer from the retrieved chunks.
 7. The UI shows the answer, retrieval mode, cosine scores, and the evidence snippets.
 
+## Example
+
+### Question
+
+> What is ABDM?
+
+### Retrieval
+
+Top relevant chunks:
+
+- Ayushman Bharat Digital Mission
+- Digital Health Infrastructure
+
+### Answer
+
+ABDM aims to build a unified digital health ecosystem by providing digital health records, ABHA accounts, and interoperable healthcare services. The response is generated only from the retrieved PIB content.
+
 ## Demo Questions
 
 - How does AB-PMJAY reduce healthcare costs for poor families?
@@ -123,3 +241,15 @@ data/index/embeddings.json
 - What progress does the document mention on NCD screening?
 - How did India expand telemedicine and last-mile care?
 
+## Future Improvements
+
+- Replace local embeddings with transformer embeddings.
+- Support multiple documents.
+- Add FAISS or ChromaDB indexing.
+- Stream LLM responses.
+- Deploy on Render or Railway.
+- Highlight answer citations directly in the UI.
+
+  ## License
+
+This project was developed as part of a technical assignment and is intended for educational and evaluation purposes.
